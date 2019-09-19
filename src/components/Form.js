@@ -14,49 +14,51 @@ const Form = ({ initialValues, onSubmit, validationSchema, validate, users }) =>
 					<FormikForm>
 						<label htmlFor="name">Name: </label>
 						<Field
+							id="name"
 							name="name"
 							type="text"
 							placeholder="Name"
 						/>
 						<ErrorMessage name="name" component="div" />
-						<br/>
 						<label htmlFor="email">Email: </label>
 						<Field
+							id="email"
 							name="email"
 							type="email"
 							placeholder="Email"
 						/>
 						<ErrorMessage name="email" component="div" />
-						<br/>
 						<label htmlFor="password">Password: </label>
 						<Field
+							id="password"
 							name="password"
 							type="password"
 							placeholder="Password"
 						/>
 						<ErrorMessage name="password" component="div" />
-						<br/>
 						<label htmlFor="terms">Terms: </label>
 						<Field
+							id="terms"
 							name="terms"
 							type="checkbox"
 							checked={props.values.terms}
 						/>
 						<ErrorMessage name="terms" component="div" />
-						<br/>
-						<button type="submit">Submit</button>
+						<button type="submit" disabled={!props.dirty}>Submit</button>
 					</FormikForm>
 					<h1>List of users</h1>
-					{
-						users.length > 0 ? users.map(user => 
-							<div key={user.createdAt} className="user">
-								{user.name}<br/>
-								{user.email}<br/>
-								{user.terms ? 'Accepted terms' : null}<br/>
-								Added on {user.createdAt}<br/>
-							</div>
-						) : <div>No users in the list</div>
-					}
+					<div className="users">
+						{
+							users.length > 0 ? users.map(user =>
+								<div key={user.createdAt} className="user">
+									{user.name}<br />
+									{user.email}<br />
+									{user.terms ? 'Accepted terms' : null}<br />
+									Added on {user.createdAt}<br />
+								</div>
+							) : <div className="user">No users in the list</div>
+						}
+					</div>
 				</>
 			)}
 		/>
