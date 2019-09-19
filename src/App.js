@@ -16,9 +16,17 @@ const validationSchema = yup.object().shape({
 	email: yup.string().email().required('Must type an email'),
 	password: yup.string().required('Must type a password with 7+ characters').min(7),
 	terms: yup.boolean()
+		.oneOf([true], 'Must Accept Terms and Conditions')
 		.required('Must Accept Terms and Conditions')
-		.oneOf([true], 'Must Accept Terms and Conditions'),
 });
+
+const validation = (formValues) => {
+	const errors = {};
+	if(formValues.email === 'waffle@syrup.com') {
+		errors.email = 'That email is already taken';
+	}
+	return errors;
+}
 
 function App() {
 	const [users, setUsers] = useState([])
@@ -40,6 +48,7 @@ function App() {
 				onSubmit={addPerson}
 				initialValues={initialFormState}
 				validationSchema={validationSchema}
+				validate={validation}
 				users={users}
 			/>
 		</div>

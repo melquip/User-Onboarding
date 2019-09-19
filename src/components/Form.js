@@ -1,10 +1,11 @@
 import React from 'react'
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 
-const Form = ({ initialValues, onSubmit, validationSchema, users }) => {
+const Form = ({ initialValues, onSubmit, validationSchema, validate, users }) => {
 	return (
 		<Formik
 			onSubmit={onSubmit}
+			validate={validate}
 			initialValues={initialValues}
 			validationSchema={validationSchema}
 			render={props => (
