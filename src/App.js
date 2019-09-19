@@ -8,9 +8,11 @@ const initialFormState = {
 	name: '',
 	email: '',
 	password: '',
+	role: 0,
+	roles: ['Front-end Developer', 'User Interface Developer', 'Back-end Developer'],
+	birthday: '',
+	isAdmin: false,
 	terms: false,
-	role: '',
-	roles: ['Front-end Developer', 'User Interface Developer', 'Back-end Developer']
 }
 
 const validationSchema = yup.object().shape({
@@ -20,7 +22,9 @@ const validationSchema = yup.object().shape({
 	terms: yup.boolean()
 		.oneOf([true], 'Must Accept Terms and Conditions')
 		.required('Must Accept Terms and Conditions'),
-	role: yup.number().required('Must select a Role'),
+	role: yup.number().required('Must select a Role').moreThan(0),
+	birthday: yup.date().required('Must insert birthdate'),
+	isAdmin: yup.boolean().oneOf([false, true], 'Must decide if user is admin or not'),
 });
 
 const validation = (formValues) => {

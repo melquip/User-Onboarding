@@ -30,11 +30,11 @@ const Form = ({ initialValues, onSubmit, validationSchema, validate, users }) =>
 								/>
 								<ErrorMessage name="name" component="div" />
 								<label htmlFor="role">Role: </label>
-								<select name="role" id="role">
+								<select name="role" id="role" onChange={props.handleChange}>
 									<option value="0">-- Select a Role --</option>
 									{
 										values.roles.map((role, i) => (
-											<option key={i} value={i}>{role}</option>
+											<option key={i+1} value={i+1}>{role}</option>
 										))
 									}
 								</select>
@@ -55,6 +55,26 @@ const Form = ({ initialValues, onSubmit, validationSchema, validate, users }) =>
 									placeholder="Password"
 								/>
 								<ErrorMessage name="password" component="div" />
+
+
+								<label htmlFor="birthday">Date of birth: </label>
+								<Field
+									id="birthday"
+									name="birthday"
+									type="date"
+									placeholder="Birthday"
+								/>
+								<ErrorMessage name="birthday" component="div" />
+								<label htmlFor="isAdmin">Is admin: </label>
+								<Field
+									id="isAdmin"
+									name="isAdmin"
+									type="checkbox"
+									checked={values.isAdmin}
+								/>
+								<ErrorMessage name="isAdmin" component="div" />
+
+
 								<label htmlFor="terms">Terms: </label>
 								<Field
 									id="terms"
@@ -70,8 +90,10 @@ const Form = ({ initialValues, onSubmit, validationSchema, validate, users }) =>
 								{
 									users.length > 0 ? users.map(user =>
 										<div key={user.createdAt} className="user">
-											{user.name}<br />
-											{user.email}<br />
+											Name is {user.name}<br />
+											Email is {user.email}<br />
+											Born in {user.birthday}<br />
+											{user.isAdmin ? "Is Administrator" : "Is standard user"}<br />
 											{user.terms ? 'Accepted terms' : null}<br />
 											Added on {user.createdAt}<br />
 										</div>
