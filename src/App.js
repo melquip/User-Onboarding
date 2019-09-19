@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -8,24 +8,26 @@ const initialFormState = {
 	name: '',
 	email: '',
 	password: '',
-	terms: '',
+	terms: false,
 }
 
 const validationSchema = yup.object().shape({
 	name: yup.string().required('Must type a name'),
 	email: yup.string().email().required('Must type an email'),
-	password: yup.string().required('Must type a password with 7+ characters').length(7),
+	password: yup.string().required('Must type a password with 7+ characters').min(7),
 	terms: yup.boolean()
 		.required('Must Accept Terms and Conditions')
 		.oneOf([true], 'Must Accept Terms and Conditions'),
 });
 
 function App() {
+	const [users, setUsers] = useState([])
 	const addPerson = (formValues, form) => {
 		axios
 			.post('https://reqres.in/api/users', formValues)
 			.then(res => {
 				console.log(res);
+				setUsers([...users, res.data]);
 				form.resetForm();
 			})
 			.catch(error => {
@@ -38,6 +40,7 @@ function App() {
 				onSubmit={addPerson}
 				initialValues={initialFormState}
 				validationSchema={validationSchema}
+				users={users}
 			/>
 		</div>
 	);
